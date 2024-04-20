@@ -102,8 +102,9 @@ const loginUser = asyncHandler(async (req, res) => {
     // send response that suceesfully logged in
 
     const { email, username, password } = req.body
+    console.log(email, password, username);
 
-    if (!(username || email)) {
+    if (!username) {
         throw new ApiError(400, "Username or email is required")
     }
 
@@ -166,7 +167,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     try {
         const incomingRefreshToken = req.body.refreshToken || req.body.refreshToken
 
-        if (incomingRefreshToken) {
+        if (!incomingRefreshToken) {
             throw new ApiError(401, "unauthorized request")
         }
 
@@ -201,5 +202,8 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     }
 
 })
+
+
+
 
 export { registerUser, loginUser, logoutUser, refreshAccessToken }
